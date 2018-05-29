@@ -5,9 +5,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.example.chords.preference.UserPreference;
 
-/**
- * Created by Рустем on 28.04.2018.
- */
+
 
 public class App extends Application {
 

@@ -10,9 +10,6 @@ import com.example.chords.preference.interfaces.UserPreferenceName;
 import static com.example.chords.preference.interfaces.UserPreferenceName.TOKEN;
 
 
-/**
- * Created by Aydar on 21.03.2018.
- */
 
 public class UserPreference implements UserPreferenceName {
 
