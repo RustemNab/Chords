@@ -9,12 +9,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
-/**
- * Created by Рустем on 28.04.2018.
- */
-
 public interface AuthApi {
-    @POST("/authenticate")
+    @POST("/auth")
     Observable<AuthResponse> authUser (@Body AuthRequest requset);
 
 }

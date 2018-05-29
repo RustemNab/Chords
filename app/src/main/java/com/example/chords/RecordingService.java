@@ -15,13 +15,29 @@ import android.widget.Toast;
 
 
 import com.example.chords.activities.MainActivity;
+import com.example.chords.activities.SongActivity;
+import com.example.chords.api.ApiModule;
+import com.example.chords.model.ListSongResponse;
+import com.example.chords.model.SongRequest;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 
 public class RecordingService extends Service {
@@ -69,6 +85,7 @@ public class RecordingService extends Service {
     public void onDestroy() {
         if (mRecorder != null) {
             stopRecording();
+            uploadFile();
         }
 
         super.onDestroy();
@@ -137,6 +154,41 @@ public class RecordingService extends Service {
         } catch (Exception e){
             Log.e(LOG_TAG, "exception", e);
         }
+
+    }
+
+    private void uploadFile() {
+
+        File file = new File(mFilePath);
+
+        // Создаем RequestBody
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        // MultipartBody.Part используется, чтобы передать имя файла
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("song", mFileName, requestFile);
+
+        // Добавляем описание
+        String descriptionString = "description";
+        RequestBody description =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"), descriptionString);
+
+        // Выполняем запрос
+        Call<ListSongResponse> call = ApiModule.getSongApi().getSong(description, body);
+        call.enqueue(new Callback<ListSongResponse>() {
+            @Override
+            public void onResponse(Call<ListSongResponse> call,
+                                   Response<ListSongResponse> response) {
+                Log.v("Upload", "success");
+            }
+
+            @Override
+            public void onFailure(Call<ListSongResponse> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
     }
 
     private void startTimer() {

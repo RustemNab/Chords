@@ -3,11 +3,6 @@ package com.example.chords.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Aydar on 12.04.2018.
- */
-
-//Посыл серверу
 public class AuthRequest {
     @SerializedName("login")
     @Expose
