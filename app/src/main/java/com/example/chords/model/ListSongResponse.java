@@ -15,11 +15,11 @@ public class ListSongResponse {
     List<SongResponse> song;
 
 
-    public List<SongResponse> getPosts() {
+    public List<SongResponse> getSong() {
         return song;
     }
 
-    public void setSongS(List<SongResponse> song) {
+    public void setSong(List<SongResponse> song) {
         this.song = song;
     }
 }

@@ -17,7 +17,7 @@ import com.example.chords.fragments.FileViewerFragment;
 import com.example.chords.fragments.RecordFragment;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity{
 
 
     public class MyAdapter extends FragmentPagerAdapter {
-        private String[] titles = { getString(R.string.tab_title_record),
-                getString(R.string.tab_title_saved_recordings) };
+        private String[] titles = {getString(R.string.tab_title_record),
+                getString(R.string.tab_title_saved_recordings)};
 
         public MyAdapter(FragmentManager fm) {
             super(fm);
@@ -59,11 +59,11 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         public Fragment getItem(int position) {
-            switch(position){
-                case 0:{
+            switch (position) {
+                case 0: {
                     return RecordFragment.newInstance(position);
                 }
-                case 1:{
+                case 1: {
                     return FileViewerFragment.newInstance(position);
                 }
             }

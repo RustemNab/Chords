@@ -88,13 +88,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void removeItemWithId(int id) {
         SQLiteDatabase db = getWritableDatabase();
-        String[] whereArgs = { String.valueOf(id) };
+        String[] whereArgs = {String.valueOf(id)};
         db.delete(DBHelperItem.TABLE_NAME, "_ID=?", whereArgs);
     }
 
     public int getCount() {
         SQLiteDatabase db = getReadableDatabase();
-        String[] projection = { DBHelperItem._ID };
+        String[] projection = {DBHelperItem._ID};
         Cursor c = db.query(DBHelperItem.TABLE_NAME, projection, null, null, null, null, null);
         int count = c.getCount();
         c.close();

@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.RecordingsViewHolder>
-    implements OnDatabaseChangedListener {
+        implements OnDatabaseChangedListener {
 
     private static final String LOG_TAG = "FileViewerAdapter";
 
@@ -63,11 +63,11 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         holder.vName.setText(item.getName());
         holder.vLength.setText(String.format("%02d:%02d", minutes, seconds));
         holder.vDateAdded.setText(
-            DateUtils.formatDateTime(
-                mContext,
-                item.getTime(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_YEAR
-            )
+                DateUtils.formatDateTime(
+                        mContext,
+                        item.getTime(),
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_YEAR
+                )
         );
 
         // define an on click listener to open PlaybackFragment
@@ -109,7 +109,8 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
                     public void onClick(DialogInterface dialog, int item) {
                         if (item == 0) {
                             shareFileDialog(holder.getPosition());
-                        } if (item == 1) {
+                        }
+                        if (item == 1) {
                             renameFileDialog(holder.getPosition());
                         } else if (item == 2) {
                             deleteFileDialog(holder.getPosition());
@@ -189,12 +190,12 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         file.delete();
 
         Toast.makeText(
-            mContext,
-            String.format(
-                mContext.getString(R.string.toast_file_delete),
-                getItem(position).getName()
-            ),
-            Toast.LENGTH_SHORT
+                mContext,
+                String.format(
+                        mContext.getString(R.string.toast_file_delete),
+                        getItem(position).getName()
+                ),
+                Toast.LENGTH_SHORT
         ).show();
 
         mDatabase.removeItemWithId(getItem(position).getId());
@@ -236,7 +237,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         mContext.startActivity(Intent.createChooser(shareIntent, mContext.getText(R.string.send_to)));
     }
 
-    public void renameFileDialog (final int position) {
+    public void renameFileDialog(final int position) {
         // File rename dialog
         AlertDialog.Builder renameFileBuilder = new AlertDialog.Builder(mContext);
 
@@ -273,7 +274,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         alert.show();
     }
 
-    public void deleteFileDialog (final int position) {
+    public void deleteFileDialog(final int position) {
         // File delete confirm
         AlertDialog.Builder confirmDelete = new AlertDialog.Builder(mContext);
         confirmDelete.setTitle(mContext.getString(R.string.dialog_title_delete));

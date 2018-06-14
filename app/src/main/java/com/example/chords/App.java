@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatDelegate;
 import com.example.chords.preference.UserPreference;
 
 
-
 public class App extends Application {
 
     private static App context;
@@ -25,7 +24,7 @@ public class App extends Application {
         UserPreference.getInstance();
     }
 
-    public static App get(){
+    public static App get() {
         return context;
     }
 }

@@ -1,7 +1,8 @@
 package com.example.chords.listeners;
 
 
-public interface OnDatabaseChangedListener{
+public interface OnDatabaseChangedListener {
     void onNewDatabaseEntryAdded();
+
     void onDatabaseEntryRenamed();
 }

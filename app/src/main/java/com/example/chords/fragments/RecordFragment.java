@@ -112,7 +112,7 @@ public class RecordFragment extends Fragment {
 
     // Recording Start/Stop
     //TODO: recording pause
-    private void onRecord(boolean start){
+    private void onRecord(boolean start) {
 
         Intent intent = new Intent(getActivity(), RecordingService.class);
 
@@ -120,7 +120,7 @@ public class RecordFragment extends Fragment {
             // start recording
             mRecordButton.setImageResource(R.drawable.ic_media_stop);
             //mPauseButton.setVisibility(View.VISIBLE);
-            Toast.makeText(getActivity(),R.string.toast_recording_start, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.toast_recording_start, Toast.LENGTH_SHORT).show();
             File folder = new File(Environment.getExternalStorageDirectory() + "/Chords");
             if (!folder.exists()) {
                 //folder /Chords doesn't exist, create the folder
@@ -175,15 +175,15 @@ public class RecordFragment extends Fragment {
         if (pause) {
             //pause recording
             mPauseButton.setCompoundDrawablesWithIntrinsicBounds
-                    (R.drawable.ic_media_play ,0 ,0 ,0);
-            mRecordingPrompt.setText((String)getString(R.string.resume_recording_button).toUpperCase());
+                    (R.drawable.ic_media_play, 0, 0, 0);
+            mRecordingPrompt.setText((String) getString(R.string.resume_recording_button).toUpperCase());
             timeWhenPaused = mChronometer.getBase() - SystemClock.elapsedRealtime();
             mChronometer.stop();
         } else {
             //resume recording
             mPauseButton.setCompoundDrawablesWithIntrinsicBounds
-                    (R.drawable.ic_media_pause ,0 ,0 ,0);
-            mRecordingPrompt.setText((String)getString(R.string.pause_recording_button).toUpperCase());
+                    (R.drawable.ic_media_pause, 0, 0, 0);
+            mRecordingPrompt.setText((String) getString(R.string.pause_recording_button).toUpperCase());
             mChronometer.setBase(SystemClock.elapsedRealtime() + timeWhenPaused);
             mChronometer.start();
         }

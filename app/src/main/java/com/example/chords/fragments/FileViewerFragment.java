@@ -66,7 +66,7 @@ public class FileViewerFragment extends Fragment {
                 // set up a file observer to watch this directory on sd card
                 @Override
                 public void onEvent(int event, String file) {
-                    if(event == FileObserver.DELETE){
+                    if (event == FileObserver.DELETE) {
                         // user deletes a recording file out of the app
 
                         String filePath = android.os.Environment.getExternalStorageDirectory().toString()

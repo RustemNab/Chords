@@ -16,9 +16,12 @@ import android.widget.Toast;
 
 import com.example.chords.activities.MainActivity;
 import com.example.chords.activities.SongActivity;
+import com.example.chords.adapters.SongListAdapter;
 import com.example.chords.api.ApiModule;
 import com.example.chords.model.ListSongResponse;
 import com.example.chords.model.SongRequest;
+import com.example.chords.preference.UserPreference;
+import com.example.chords.preference.interfaces.UserPreferenceName;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +46,8 @@ import rx.schedulers.Schedulers;
 public class RecordingService extends Service {
 
     private static final String LOG_TAG = "RecordingService";
+
+    private SongListAdapter adapter;
 
     private String mFileName = null;
     private String mFilePath = null;
@@ -118,11 +123,11 @@ public class RecordingService extends Service {
         }
     }
 
-    public void setFileNameAndPath(){
+    public void setFileNameAndPath() {
         int count = 0;
         File f;
 
-        do{
+        do {
             count++;
 
             mFileName = getString(R.string.default_file_name)
@@ -131,7 +136,7 @@ public class RecordingService extends Service {
             mFilePath += "/Chords/" + mFileName;
 
             f = new File(mFilePath);
-        }while (f.exists() && !f.isDirectory());
+        } while (f.exists() && !f.isDirectory());
     }
 
     public void stopRecording() {
@@ -151,7 +156,7 @@ public class RecordingService extends Service {
         try {
             mDatabase.addRecording(mFileName, mFilePath, mElapsedMillis);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.e(LOG_TAG, "exception", e);
         }
 
@@ -167,7 +172,7 @@ public class RecordingService extends Service {
 
         // MultipartBody.Part используется, чтобы передать имя файла
         MultipartBody.Part body =
-                MultipartBody.Part.createFormData("song", mFileName, requestFile);
+                MultipartBody.Part.createFormData("audio/mp4", mFileName, requestFile);
 
         // Добавляем описание
         String descriptionString = "description";
@@ -176,19 +181,18 @@ public class RecordingService extends Service {
                         MediaType.parse("multipart/form-data"), descriptionString);
 
         // Выполняем запрос
-        Call<ListSongResponse> call = ApiModule.getSongApi().getSong(description, body);
-        call.enqueue(new Callback<ListSongResponse>() {
-            @Override
-            public void onResponse(Call<ListSongResponse> call,
-                                   Response<ListSongResponse> response) {
-                Log.v("Upload", "success");
-            }
-
-            @Override
-            public void onFailure(Call<ListSongResponse> call, Throwable t) {
-                Log.e("Upload error:", t.getMessage());
-            }
-        });
+//        ApiModule.getSongApi()
+//                .getSong(description, body)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<ListSongResponse>(){
+//                    @Override
+//                    public void call(ListSongResponse songResponse) {
+//                        //adapter.updateData(songResponse.getSong());
+//                        //UserPreference  set songreponseList
+//                        Log.v("Upload", "success");
+//                    }
+//                });
     }
 
     private void startTimer() {

@@ -5,10 +5,8 @@ import android.content.SharedPreferences;
 
 
 import com.example.chords.App;
+import com.example.chords.model.ListSongResponse;
 import com.example.chords.preference.interfaces.UserPreferenceName;
-
-import static com.example.chords.preference.interfaces.UserPreferenceName.TOKEN;
-
 
 
 public class UserPreference implements UserPreferenceName {
@@ -17,31 +15,33 @@ public class UserPreference implements UserPreferenceName {
 
     private static UserPreference instance;
 
-    private String token;
+
+    private ListSongResponse listSongResponse;
 
     private SharedPreferences preferences;
 
-    public static UserPreference getInstance(){
+    public static UserPreference getInstance() {
         if (instance == null)
             instance = new UserPreference();
 
         return instance;
     }
 
-    private UserPreference(){
+    private UserPreference() {
         preferences = App.get().getSharedPreferences(USER_PREFERENCES, Context.MODE_PRIVATE);
         initFields();
     }
 
+    // public ListSongResponse getListSongResponse() {
+    // return listSongResponse;
+    //}
+
+    public void setListSongResponse(ListSongResponse listSongResponse) {
+        this.listSongResponse = listSongResponse;
+    }
+
     private void initFields() {
-        token = preferences.getString(TOKEN, "TOKEN");
+        //  listSongResponse = preferences.getString(CHORD, "chord");
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }
