@@ -167,32 +167,33 @@ public class RecordingService extends Service {
         File file = new File(mFilePath);
 
         // Создаем RequestBody
-        RequestBody requestFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
         // MultipartBody.Part используется, чтобы передать имя файла
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("audio/mp4", mFileName, requestFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("audio/mp4"
+                , mFileName, requestFile);
 
         // Добавляем описание
         String descriptionString = "description";
-        RequestBody description =
-                RequestBody.create(
-                        MediaType.parse("multipart/form-data"), descriptionString);
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data")
+                , descriptionString);
 
         // Выполняем запрос
-//        ApiModule.getSongApi()
-//                .getSong(description, body)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<ListSongResponse>(){
-//                    @Override
-//                    public void call(ListSongResponse songResponse) {
-//                        //adapter.updateData(songResponse.getSong());
-//                        //UserPreference  set songreponseList
-//                        Log.v("Upload", "success");
-//                    }
-//                });
+        ApiModule.getSongApi()
+                .getSong(description, body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ListSongResponse>(){
+                    @Override
+                    public void call(ListSongResponse songResponse) {
+                        Log.d("RECORD", "response: " + songResponse);
+
+                        UserPreference.getInstance().setListSongResponse(songResponse);
+                        //adapter.updateData(songResponse.getSong());
+                        //UserPreference  set songreponseList
+                        Log.v("RECORD", "success");
+                    }
+                });
     }
 
     private void startTimer() {

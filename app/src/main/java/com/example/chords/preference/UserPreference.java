@@ -8,6 +8,8 @@ import com.example.chords.App;
 import com.example.chords.model.ListSongResponse;
 import com.example.chords.preference.interfaces.UserPreferenceName;
 
+import java.util.Map;
+
 
 public class UserPreference implements UserPreferenceName {
 
@@ -15,8 +17,9 @@ public class UserPreference implements UserPreferenceName {
 
     private static UserPreference instance;
 
-
+    //Параметры, кторые сохраняем (из Интерфейса)
     private ListSongResponse listSongResponse;
+    private String chord;
 
     private SharedPreferences preferences;
 
@@ -32,16 +35,40 @@ public class UserPreference implements UserPreferenceName {
         initFields();
     }
 
+    /**
+     * Инициализация (если я не накосячил)
+     * Создается мапа со всеми параметрами из preferences
+     * забирается от туда listSongResponse
+     * Пишу через мапу, так как как у него не стандартный тип (не инт, лонг и т.д.)
+     *
+     * chord забирается стандартным образом
+     */
+    private void initFields() {
+
+        Map<String, ?> map = preferences.getAll();
+
+        listSongResponse = (ListSongResponse) map.get(LISTRECORD);
+        chord = preferences.getString(CHORD, "chord");
+    }
+
     // public ListSongResponse getListSongResponse() {
     // return listSongResponse;
     //}
+
+
+    public ListSongResponse getListSongResponse() {
+        return listSongResponse;
+    }
 
     public void setListSongResponse(ListSongResponse listSongResponse) {
         this.listSongResponse = listSongResponse;
     }
 
-    private void initFields() {
-        //  listSongResponse = preferences.getString(CHORD, "chord");
+    public String getChord() {
+        return chord;
     }
 
+    public void setChord(String chord) {
+        this.chord = chord;
+    }
 }

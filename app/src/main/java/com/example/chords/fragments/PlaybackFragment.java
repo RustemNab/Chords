@@ -5,9 +5,11 @@ import android.app.Dialog;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
@@ -73,6 +75,7 @@ public class PlaybackFragment extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

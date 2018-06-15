@@ -8,5 +8,5 @@ import java.util.List;
 public interface UserPreferenceName {
 
     String CHORD = "chord";
-
+    String LISTRECORD = "LISTRECORD";
 }
