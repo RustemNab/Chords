@@ -17,7 +17,7 @@ import rx.Observable;
 
 public interface SongApi {
     @Multipart
-    @POST("EC2Co-EcsEl-14G7P3W3Z9F63-465517196.us-east-1.elb.amazonaws.com:5000")
+    @POST
     Observable<ListSongResponse> getSong(@Part("description") RequestBody description,
                                    @Part MultipartBody.Part file);
 

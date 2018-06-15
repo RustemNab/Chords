@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiModule {
     private static String AUTH_HEADER = "x-auth-token";
-    private static String BASE_DOMAIN = "";
+    private static String BASE_DOMAIN = "http://35.228.252.81";
 
     private static SongApi songApi;
 
