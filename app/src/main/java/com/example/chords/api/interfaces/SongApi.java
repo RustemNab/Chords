@@ -17,7 +17,7 @@ import rx.Observable;
 
 public interface SongApi {
     @Multipart
-    @POST
+    @POST("/")
     Observable<ListSongResponse> getSong(@Part("description") RequestBody description,
                                    @Part MultipartBody.Part file);
 

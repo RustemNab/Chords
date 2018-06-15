@@ -189,8 +189,7 @@ public class RecordingService extends Service {
                         Log.d("RECORD", "response: " + songResponse);
 
                         UserPreference.getInstance().setListSongResponse(songResponse);
-                        //adapter.updateData(songResponse.getSong());
-                        //UserPreference  set songreponseList
+
                         Log.v("RECORD", "success");
                     }
                 });
