@@ -90,7 +90,7 @@ public class RecordingService extends Service {
     public void onDestroy() {
         if (mRecorder != null) {
             stopRecording();
-            uploadFile();
+            //uploadFile();
         }
 
         super.onDestroy();

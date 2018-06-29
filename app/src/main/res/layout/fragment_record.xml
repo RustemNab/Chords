@@ -6,39 +6,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <com.melnykov.fab.FloatingActionButton
+
+    <ImageButton
         android:id="@+id/btnRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnPause"
-        android:layout_alignEnd="@+id/chronometer"
-        android:layout_alignRight="@+id/chronometer"
-        android:src="@drawable/ic_mic_white_36dp"
-        app:fab_colorNormal="@color/primary" />
-
-    <Chronometer
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/chronometer"
-        android:textSize="60sp"
-        android:fontFamily="sans-serif-light"
-        android:layout_alignBottom="@+id/recordProgressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="64dp" />
-
-    <ProgressBar
-        android:id="@+id/recordProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:background="@drawable/record_progress_bar_background"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="0"
-        android:progressDrawable="@drawable/record_progress_bar" />
+        android:layout_marginTop="100dp"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        app:srcCompat="@drawable/ic_record" />
 
     <Button
         android:layout_width="wrap_content"
@@ -59,7 +38,7 @@
         android:id="@+id/recording_status_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chronometer"
+        android:layout_below="@+id/btnRecord"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="67dp"
         android:fontFamily="sans-serif-condensed"
@@ -67,5 +46,6 @@
         android:textColor="#000000"
         android:textSize="17sp"
         android:textStyle="bold" />
+
 
 </RelativeLayout>
