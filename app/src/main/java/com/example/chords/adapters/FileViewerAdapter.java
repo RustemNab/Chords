@@ -23,12 +23,25 @@ import android.widget.Toast;
 import com.example.chords.DBHelper;
 import com.example.chords.R;
 import com.example.chords.RecordingItem;
+import com.example.chords.RecordingService;
+import com.example.chords.api.ApiModule;
 import com.example.chords.fragments.PlaybackFragment;
 import com.example.chords.listeners.OnDatabaseChangedListener;
+import com.example.chords.model.ListSongResponse;
+import com.example.chords.preference.UserPreference;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okio.BufferedSink;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 
 public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.RecordingsViewHolder>
@@ -230,11 +243,40 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
     }
 
     public void shareFileDialog(int position) {
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(getItem(position).getFilePath())));
-        shareIntent.setType("audio/mp4");
-        mContext.startActivity(Intent.createChooser(shareIntent, mContext.getText(R.string.send_to)));
+//        Intent shareIntent = new Intent();
+//        shareIntent.setAction(Intent.ACTION_SEND);
+//        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(getItem(position).getFilePath())));
+//        shareIntent.setType("audio/mp4");
+//        mContext.startActivity(Intent.createChooser(shareIntent, mContext.getText(R.string.send_to)));
+
+        File file = new File(getItem(position).getFilePath());
+
+        // Создаем RequestBody
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        MultipartBody.Part part = MultipartBody.Part.create(requestFile);
+        // MultipartBody.Part используется, чтобы передать имя файла
+//        MultipartBody.Part body = MultipartBody.Part.createFormData("audio/mp4"
+//                , mDatabase.getItemAt(position).getName(), requestFile);
+
+        // Добавляем описание
+//        String descriptionString = "description";
+//        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data")
+//                , descriptionString);
+
+        // Выполняем запрос
+        ApiModule.getSongApi()
+                .getSong(part)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ListSongResponse>(){
+                    @Override
+                    public void call(ListSongResponse songResponse) {
+                        Log.d("RECORD", "response: " + songResponse);
+                        UserPreference.getInstance().setListSongResponse(songResponse);
+                        Log.v("RECORD", "success");
+                    }
+                });
     }
 
     public void renameFileDialog(final int position) {

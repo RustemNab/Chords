@@ -16,19 +16,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ApiModule {
-    private static String AUTH_HEADER = "x-auth-token";
     private static String BASE_DOMAIN = "http://35.228.252.81";
 
     private static SongApi songApi;
 
     public static SongApi getSongApi() {
         if (songApi == null)
-            songApi = getApiInterface(SongApi.class, BASE_DOMAIN, false);
+            songApi = getApiInterface(SongApi.class, BASE_DOMAIN);
         return songApi;
     }
 
 
-    private static <T> T getApiInterface(Class<T> tClass, String domain, boolean needTooken) {
+    private static <T> T getApiInterface(Class<T> tClass, String domain) {
         Retrofit.Builder rBuilder = new Retrofit.Builder()
                 .baseUrl(domain)
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
@@ -36,7 +35,6 @@ public class ApiModule {
 
         //Создаём клиент-билдера
         OkHttpClient.Builder clBuilder = new OkHttpClient.Builder();
-
 
         //Получаем клиента из клиент-билдера
         OkHttpClient client = clBuilder.build();
@@ -46,28 +44,4 @@ public class ApiModule {
 
         return rBuilder.build().create(tClass);
     }
-
-//    private static Interceptor getAuthInterceptor() {
-//        //Возвращает перехватчик
-//        return new AuthInterceptor();
-//    }
-
-
-//    private static class AuthInterceptor implements Interceptor {
-//
-//        @Override
-//        public Response intercept(Chain chain) throws IOException {
-//            //Старый запрос
-//            Request request = chain.request();
-//            //Новый запрос
-//            Request newRequest;
-//
-//            //Добавим в хедер новому запросу (x-auth-token, значение токена)
-//            newRequest = request.newBuilder()
-//                    .addHeader(AUTH_HEADER, UserPreference.getInstance().getToken())
-//                    .build();
-//
-//            return  chain.proceed(newRequest);
-//        }
-//    }
 }

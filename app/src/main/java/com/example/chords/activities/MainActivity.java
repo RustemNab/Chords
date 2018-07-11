@@ -16,25 +16,34 @@ import com.example.chords.R;
 import com.example.chords.fragments.FileViewerFragment;
 import com.example.chords.fragments.RecordFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    private PagerSlidingTabStrip tabs;
-    private ViewPager pager;
+    @BindView(R.id.tabs)
+    protected PagerSlidingTabStrip tabs;
+    @BindView(R.id.pager)
+    protected ViewPager pager;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pager = (ViewPager) findViewById(R.id.pager);
+        ButterKnife.bind(this);
+
+//        pager = (ViewPager) findViewById(R.id.pager);
+//        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(pager);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
         if (toolbar != null) {
             setSupportActionBar(toolbar);

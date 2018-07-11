@@ -13,14 +13,19 @@ import com.example.chords.preference.UserPreference;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+
 public class SongActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar2)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
